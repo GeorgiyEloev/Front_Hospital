@@ -77,8 +77,9 @@ const Login = () => {
           });
       } else {
         setSnackbar({
-          message:
-            "Длина пароля не меньше 6 символов. Все символы латинского алфавита. Пароль должен содержать обязательно хотя бы одно число.!!!",
+          message: `Длина пароля не меньше 6 символов. 
+						Все символы латинского алфавита. 
+						Пароль должен содержать обязательно хотя бы одно число.!!!`,
           status: "warning",
         });
         dataLoginEdit({
@@ -89,8 +90,8 @@ const Login = () => {
       }
     } else {
       setSnackbar({
-        message:
-          "Длина логина не меньше 6 символов. Все символы латинского алфавита или цифры!!!",
+        message: `Длина логина не меньше 6 символов. 
+					Все символы латинского алфавита или цифры!!!`,
         status: "warning",
       });
       dataLoginEdit({
@@ -108,7 +109,11 @@ const Login = () => {
         <h1>Войти в систему</h1>
       </AppBar>
       <Container className="container-style">
-        <img src={Vector} alt="Vector" className="img-vector" />
+        <img
+          src={Vector}
+          alt="Vector"
+          className="img-vector"
+        />
         <Box className="box-style">
           <div className="group-login">
             <h1>Войти в систему</h1>
@@ -117,7 +122,10 @@ const Login = () => {
               id="outlined-required"
               value={login}
               onChange={(event) =>
-                dataLoginEdit({ login: event.target.value, password: password })
+                dataLoginEdit({
+                  login: event.target.value,
+                  password: password,
+                })
               }
             />
             <p>Password:</p>
@@ -128,7 +136,10 @@ const Login = () => {
               autoComplete="current-password"
               value={password}
               onChange={(event) =>
-                dataLoginEdit({ login: login, password: event.target.value })
+                dataLoginEdit({
+                  login: login,
+                  password: event.target.value,
+                })
               }
             />
           </div>
@@ -156,7 +167,7 @@ const Login = () => {
         autoHideDuration={10000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={status} sx={{ width: "100%" }}>
+        <Alert onClose={handleClose} severity={status} className="alert-style">
           {message}
         </Alert>
       </Snackbar>
