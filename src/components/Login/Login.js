@@ -40,7 +40,7 @@ const Login = () => {
     setOpen(false);
   };
 
-  const Alert = React.forwardRef(function Alert(props, ref) {
+  const Alert = React.forwardRef((props, ref) => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
@@ -57,38 +57,49 @@ const Login = () => {
   const loginRegular = login.match(/^[a-z\d]{6,}$/gi);
 
   const loginSystem = async () => {
-    if (passwordRegular && loginRegular) {
-      await axios
-        .post("http://localhost:8000/user/authorizationUser", {
-          login: login.trim(),
-          password: password.trim(),
-        })
-        .catch((err) => {
-          setSnackbar({
-            message: "Неверный логин или пароль!!!",
-            status: "error",
+    if (loginRegular) {
+      if (passwordRegular) {
+        await axios
+          .post("http://localhost:8000/user/authorizationUser", {
+            login: login.trim(),
+            password: password.trim(),
+          })
+          .then((results) => {
+            navigation("/main");
+            localStorage.setItem("token", results.data.data.token);
+          })
+          .catch((err) => {
+            setSnackbar({
+              message: "Неверный логин или пароль!!!",
+              status: "error",
+            });
+            dataLoginEdit({
+              login: "",
+              password: "",
+            });
+            handleClick();
           });
-          dataLoginEdit({
-            login: "",
-            password: "",
-          });
-          handleClick();
-        })
-        .then((results) => {
-          navigation("/main");
-          localStorage.setItem("token", results.data.data.token);
+      } else {
+        setSnackbar({
+          message:
+            "Длина логина не меньше 6 символов. Все символы латинского алфавита или цифры!!!",
+          status: "warning",
         });
+        dataLoginEdit({
+          login: login,
+          password: "",
+        });
+        handleClick();
+      }
     } else {
       setSnackbar({
-        message: `Длина логина не меньше 6 символов. Все символы латинского алфавита или
-				цифры!!!
-				Длина пароля не меньше 6 символов. Все символы латинского алфавита.
-				Пароль должна содержать обязательно хотя бы одно число.!!!`,
+        message: `Длина пароля не меньше 6 символов. Все символы латинского алфавита.
+				Пароль должен содержать обязательно хотя бы одно число.!!!`,
         status: "warning",
       });
       dataLoginEdit({
         login: "",
-        password: "",
+        password: password,
       });
       handleClick();
     }
@@ -108,7 +119,6 @@ const Login = () => {
             <p>Login:</p>
             <TextField
               id="outlined-required"
-              label="Login"
               value={login}
               onChange={(event) =>
                 dataLoginEdit({ login: event.target.value, password: password })
@@ -116,8 +126,8 @@ const Login = () => {
             />
             <p>Password:</p>
             <TextField
+              hiddenLabel
               id="outlined-password-input"
-              label="Password"
               type="password"
               autoComplete="current-password"
               value={password}
