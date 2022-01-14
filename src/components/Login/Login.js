@@ -116,7 +116,11 @@ const Login = () => {
         <h1>Войти в систему</h1>
       </AppBar>
       <Container className="container-style">
-        <img src={Vector} alt="Vector" className="img-vector" />
+        <img 
+					src={Vector} 
+					alt="Vector" 
+					className="img-vector"
+				/>
         <Box className="box-style">
           <div className="group-login">
             <h1>Войти в систему</h1>
