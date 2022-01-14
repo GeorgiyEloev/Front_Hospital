@@ -37,7 +37,14 @@ const Login = () => {
   };
 
   const Alert = React.forwardRef((props, ref) => {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return (
+      <MuiAlert
+        elevation={6}
+        ref={ref}
+        variant="filled"
+        {...props}
+      />
+    );
   });
 
   const state = {
@@ -78,8 +85,8 @@ const Login = () => {
       } else {
         setSnackbar({
           message: `Длина пароля не меньше 6 символов. 
-					Все символы латинского алфавита.
-					Пароль должен содержать обязательно хотя бы одно число.!!!`,
+						Все символы латинского алфавита.
+						Пароль должен содержать обязательно хотя бы одно число.!!!`,
           status: "warning",
         });
         dataLoginEdit({
@@ -109,11 +116,7 @@ const Login = () => {
         <h1>Войти в систему</h1>
       </AppBar>
       <Container className="container-style">
-        <img
-          src={Vector}
-          alt="Vector"
-          className="img-vector"
-        />
+        <img src={Vector} alt="Vector" className="img-vector" />
         <Box className="box-style">
           <div className="group-login">
             <h1>Войти в систему</h1>
@@ -167,7 +170,11 @@ const Login = () => {
         autoHideDuration={10000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={status} className="alert-style">
+        <Alert
+          onClose={handleClose}
+          everity={status}
+          className="alert-style"
+        >
           {message}
         </Alert>
       </Snackbar>
