@@ -32,11 +32,7 @@ const Login = () => {
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -82,7 +78,7 @@ const Login = () => {
       } else {
         setSnackbar({
           message:
-            "Длина логина не меньше 6 символов. Все символы латинского алфавита или цифры!!!",
+            "Длина пароля не меньше 6 символов. Все символы латинского алфавита. Пароль должен содержать обязательно хотя бы одно число.!!!",
           status: "warning",
         });
         dataLoginEdit({
@@ -93,8 +89,8 @@ const Login = () => {
       }
     } else {
       setSnackbar({
-        message: `Длина пароля не меньше 6 символов. Все символы латинского алфавита.
-				Пароль должен содержать обязательно хотя бы одно число.!!!`,
+        message:
+          "Длина логина не меньше 6 символов. Все символы латинского алфавита или цифры!!!",
         status: "warning",
       });
       dataLoginEdit({
