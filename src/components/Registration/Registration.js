@@ -38,7 +38,14 @@ const Registration = () => {
   };
 
   const Alert = React.forwardRef((props, ref) => {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return (
+      <MuiAlert
+        elevation={6}
+        ref={ref}
+        variant="filled"
+        {...props}
+      />
+    );
   });
 
   const state = {
@@ -84,8 +91,8 @@ const Registration = () => {
             status: "warning",
           });
           dataLoginEdit({
-            login: login,
-            password: password,
+            login,
+            password,
             rePassword: "",
           });
           handleClick();
@@ -98,7 +105,7 @@ const Registration = () => {
           status: "warning",
         });
         dataLoginEdit({
-          login: login,
+          login,
           password: "",
           rePassword: "",
         });
@@ -112,8 +119,8 @@ const Registration = () => {
       });
       dataLoginEdit({
         login: "",
-        password: password,
-        rePassword: rePassword,
+        password,
+        rePassword,
       });
       handleClick();
     }
@@ -126,7 +133,11 @@ const Registration = () => {
         <h1>Зарегистрироваться в системе</h1>
       </AppBar>
       <Container className="container-style">
-        <img src={Vector} alt="Vector" className="img-vector" />
+        <img
+          src={Vector}
+          alt="Vector"
+          className="img-vector"
+        />
         <Box className="box-style">
           <div className="group-login">
             <h1>Регистрация</h1>
@@ -137,8 +148,8 @@ const Registration = () => {
               onChange={(event) =>
                 dataLoginEdit({
                   login: event.target.value,
-                  password: password,
-                  rePassword: rePassword,
+                  password,
+                  rePassword,
                 })
               }
             />
@@ -151,9 +162,9 @@ const Registration = () => {
               value={password}
               onChange={(event) =>
                 dataLoginEdit({
-                  login: login,
+                  login,
                   password: event.target.value,
-                  rePassword: rePassword,
+                  rePassword,
                 })
               }
             />
@@ -166,8 +177,8 @@ const Registration = () => {
               value={rePassword}
               onChange={(event) =>
                 dataLoginEdit({
-                  login: login,
-                  password: password,
+                  login,
+                  password,
                   rePassword: event.target.value,
                 })
               }
@@ -197,7 +208,11 @@ const Registration = () => {
         autoHideDuration={10000}
         onClose={handleClose}
       >
-        <Alert onClose={handleClose} severity={status} className="alert-style">
+        <Alert
+          onClose={handleClose}
+          severity={status}
+          className="alert-style"
+        >
           {message}
         </Alert>
       </Snackbar>

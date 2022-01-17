@@ -4,7 +4,7 @@ import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
 import "./App.scss";
 
-function App() {
+const App = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
