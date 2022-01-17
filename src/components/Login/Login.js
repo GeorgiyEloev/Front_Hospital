@@ -41,7 +41,7 @@ const Login = () => {
       <MuiAlert
         elevation={6}
         ref={ref}
-        variant="                filled"
+        variant="filled"
         {...props}
       />
     );
@@ -63,8 +63,8 @@ const Login = () => {
         password: password.trim(),
       })
       .then((results) => {
-        navigation("/main");
         localStorage.setItem("token", results.data.data.token);
+				navigation("/main");
       })
       .catch((err) => {
         setSnackbar({
@@ -89,7 +89,7 @@ const Login = () => {
         <img
           src={Vector}
           alt="Vector"
-          className="                   img-vector"
+          className="img-vector"
         />
         <Box className="box-style">
           <div className="group-login">
@@ -147,7 +147,7 @@ const Login = () => {
         <Alert
           onClose={handleClose}
           severity={status}
-          className="                          alert-style"
+          className="alert-style"
         >
           {message}
         </Alert>

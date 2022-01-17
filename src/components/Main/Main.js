@@ -10,30 +10,31 @@ const Main = () => {
 
   const navigation = useNavigate();
 
-  const uploadAllRecords = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    await axios
-      .get("http://localhost:8000/record/allRecord", {
-        headers: { authorization: token },
-      })
-      .then((res) => {
-        setAllRecords(res.data.data);
-      })
-      .catch((err) => {
-        localStorage.clear();
-        navigation("/login");
-      });
-  };
-
   useEffect(() => {
+    const uploadAllRecords = async () => {
+      const token = localStorage.getItem("token");
+      await axios
+        .get("http://localhost:8000/record/allRecord", {
+          headers: { authorization: token },
+        })
+        .then((res) => {
+          setAllRecords(res.data.data);
+        })
+        .catch((err) => {
+          localStorage.clear();
+          navigation("/login");
+        });
+    };
+
     uploadAllRecords();
-  }, []);
+  }, [navigation]);
 
   return (
     <div className="login-main">
       <AppBar className="label-header">
         <img src={logo} alt="logo" />
         <h1>Приемы</h1>
+        {allRecords}
       </AppBar>
     </div>
   );

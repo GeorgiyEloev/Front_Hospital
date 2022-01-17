@@ -70,8 +70,8 @@ const Registration = () => {
               password: password.trim(),
             })
             .then((results) => {
-              navigation("/main");
               localStorage.setItem("token", results.data.data.token);
+							navigation("/main");
             })
             .catch((err) => {
               setSnackbar({
