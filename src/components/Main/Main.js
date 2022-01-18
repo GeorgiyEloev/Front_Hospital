@@ -34,7 +34,6 @@ const Main = () => {
       <AppBar className="label-header">
         <img src={logo} alt="logo" />
         <h1>Приемы</h1>
-        {allRecords}
       </AppBar>
     </div>
   );
