@@ -1,13 +1,11 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import {
-  DesktopDatePicker,
-  AdapterDateFns,
-  LocalizationProvider,
-} from "@mui/lab";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
 const DateInput = ({ newRecord, setNewRecord }) => {
-  const { name, doctor, date, complaints } = newRecord;
+  const { patient, doctor, date, symptoms } = newRecord;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -19,13 +17,18 @@ const DateInput = ({ newRecord, setNewRecord }) => {
         value={date}
         onChange={(event) => {
           setNewRecord({
-            name,
+            patient,
             doctor,
             date: event,
-            complaints,
+            symptoms,
           });
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            sx={{ backgroundColor: "white" }} //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          />
+        )}
       />
     </LocalizationProvider>
   );
