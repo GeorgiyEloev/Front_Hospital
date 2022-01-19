@@ -41,7 +41,7 @@ const Login = () => {
       <MuiAlert
         elevation={6}
         ref={ref}
-        variant="                filled"
+        variant="filled"
         {...props}
       />
     );

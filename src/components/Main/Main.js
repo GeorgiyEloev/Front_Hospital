@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
+import DateInput from "./DateInput";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import logo from "../../img/logo.png";
 import "./Main.scss";
-import DateInput from "../DateInput";
+
 
 const Main = () => {
   const [allRecords, setAllRecords] = useState([]);
