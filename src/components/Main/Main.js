@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
+import { AppBar, TextField, Button, MenuItem, Select, Modal } from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
@@ -18,6 +18,8 @@ const Main = () => {
     date: new Date(),
     symptoms: "",
   });
+
+  const [openModel, setOpenModel] = useState(false);
 
   const [open, setOpen] = useState(false);
   const [snackbar, setSnackbar] = useState({
