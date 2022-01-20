@@ -60,6 +60,12 @@ const Registration = () => {
   const passwordRegular = password.match(/^(?=.*\d)[a-z\d]{6,}$/gi);
   const loginRegular = login.match(/^[a-z\d]{6,}$/gi);
 
+  const messageWarPassword = `Длина пароля не меньше 6 символов. 
+	Все символы латинского алфавита.Пароль должен содержать обязательно 
+	хотя бы одно число.!!!`;
+  const messageWarLogin = `Длина логина не меньше 6 символов. 
+	Все символы латинского алфавита или цифры!!!`;
+
   const snackbarParams = (message, status) => {
     setSnackbar({
       message,
@@ -103,10 +109,7 @@ const Registration = () => {
           password: "",
           rePassword: "",
         });
-        const messageWar = `Длина пароля не меньше 6 символов. 
-				Все символы латинского алфавита.
-				Пароль должен содержать обязательно хотя бы одно число.!!!`;
-        snackbarParams(messageWar, "warning");
+        snackbarParams(messageWarPassword, "warning");
       }
     } else {
       dataLoginEdit({
@@ -114,9 +117,7 @@ const Registration = () => {
         password,
         rePassword,
       });
-      const messageWar = `Длина логина не меньше 6 символов. 
-			Все символы латинского алфавита или цифры!!!`;
-      snackbarParams(messageWar, "warning");
+      snackbarParams(messageWarLogin, "warning");
     }
   };
 
