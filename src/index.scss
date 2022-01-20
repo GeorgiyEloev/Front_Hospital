@@ -75,6 +75,10 @@ code {
   border-bottom: 2px solid #000;
 }
 
+.MuiSvgIcon-root:hover {
+	cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .main .MuiTableContainer-root {
     width: 95%;

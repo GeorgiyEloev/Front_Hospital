@@ -68,7 +68,7 @@ const Main = () => {
   };
 
   const addNewRecord = async () => {
-    let newDate = moment(date).format("YYYY-MM-DD");
+    newRecord.date = moment(date).format("YYYY-MM-DD");
     if (patient !== "") {
       if (doctor !== "") {
         if (symptoms !== "") {
@@ -78,21 +78,12 @@ const Main = () => {
             checkDate
           ) {
             if (checkDate) {
-              newDate = moment().format("YYYY-MM-DD");
+              newRecord.date = moment().format("YYYY-MM-DD");
             }
             await axios
-              .post(
-                "http://localhost:8000/record/addNewRecord",
-                {
-                  patient,
-                  doctor,
-                  date: newDate,
-                  symptoms,
-                },
-                {
-                  headers: { authorization: token },
-                }
-              )
+              .post("http://localhost:8000/record/addNewRecord", newRecord, {
+                headers: { authorization: token },
+              })
               .then((res) => {
                 setAllRecords(res.data.data);
                 if (checkDate) {
@@ -262,7 +253,11 @@ const Main = () => {
         </Button>
       </AppBar>
       {allRecords.length ? (
-        <TableRecords allRecords={allRecords} setAllRecords={setAllRecords} />
+        <TableRecords
+          allRecords={allRecords}
+          setAllRecords={setAllRecords}
+          snackbarParams={snackbarParams}
+        />
       ) : (
         <></>
       )}
