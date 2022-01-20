@@ -113,17 +113,14 @@ const Main = () => {
                 setCheckDate(false);
               })
               .catch((err) => {
-                switch (err.response.status) {
-                  case 401:
-                    snackbarParams("Ошибка авторизации!!!", "error", true);
-                    break;
-                  default:
-                    snackbarParams(
-                      "Ошибка новой записии! Запись не сохранена!",
-                      "warning",
-                      false
-                    );
-                    break;
+                if (err.response.status === 401) {
+                  snackbarParams("Ошибка авторизации!!!", "error", true);
+                } else {
+                  snackbarParams(
+                    "Ошибка новой записии! Запись не сохранена!",
+                    "warning",
+                    false
+                  );
                 }
               });
           } else {
@@ -264,7 +261,11 @@ const Main = () => {
           Добавить
         </Button>
       </AppBar>
-      <TableRecords allRecords={allRecords} setAllRecords={setAllRecords} />
+      {allRecords.length ? (
+        <TableRecords allRecords={allRecords} setAllRecords={setAllRecords} />
+      ) : (
+        <></>
+      )}
       {errorToken ? (
         <SnackbarComponent
           open={open}
