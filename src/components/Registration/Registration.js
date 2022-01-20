@@ -60,6 +60,14 @@ const Registration = () => {
   const passwordRegular = password.match(/^(?=.*\d)[a-z\d]{6,}$/gi);
   const loginRegular = login.match(/^[a-z\d]{6,}$/gi);
 
+  const snackbarParams = (message, status) => {
+    setSnackbar({
+      message,
+      status,
+    });
+    handleClick();
+  };
+
   const loginSystem = async () => {
     if (loginRegular) {
       if (passwordRegular) {
@@ -70,59 +78,45 @@ const Registration = () => {
               password: password.trim(),
             })
             .then((results) => {
-              navigation("/main");
               localStorage.setItem("token", results.data.data.token);
+              navigation("/main");
             })
             .catch((err) => {
-              setSnackbar({
-                message: "Логин занят!!!",
-                status: "error",
-              });
               dataLoginEdit({
                 login: "",
                 password: "",
                 rePassword: "",
               });
-              handleClick();
+              snackbarParams("Логин занят!!!", "error");
             });
         } else {
-          setSnackbar({
-            message: "Пароли не совпадают!",
-            status: "warning",
-          });
           dataLoginEdit({
             login,
             password,
             rePassword: "",
           });
-          handleClick();
+          snackbarParams("Пароли не совпадают!", "warning");
         }
       } else {
-        setSnackbar({
-          message: `Длина пароля не меньше 6 символов. 
-						Все символы латинского алфавита.
-						Пароль должен содержать обязательно хотя бы одно число.!!!`,
-          status: "warning",
-        });
         dataLoginEdit({
           login,
           password: "",
           rePassword: "",
         });
-        handleClick();
+        const messageWar = `Длина пароля не меньше 6 символов. 
+				Все символы латинского алфавита.
+				Пароль должен содержать обязательно хотя бы одно число.!!!`;
+        snackbarParams(messageWar, "warning");
       }
     } else {
-      setSnackbar({
-        message: `Длина логина не меньше 6 символов. 
-					Все символы латинского алфавита или цифры!!!`,
-        status: "warning",
-      });
       dataLoginEdit({
         login: "",
         password,
         rePassword,
       });
-      handleClick();
+      const messageWar = `Длина логина не меньше 6 символов. 
+			Все символы латинского алфавита или цифры!!!`;
+      snackbarParams(messageWar, "warning");
     }
   };
 
