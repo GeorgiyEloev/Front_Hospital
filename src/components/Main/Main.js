@@ -43,28 +43,19 @@ const Main = () => {
           setAllRecords(res.data.data);
         })
         .catch((err) => {
-          switch (err.response.status) {
-            case 401:
-              setSnackbar({
-                message: "Ошибка авторизации!!!",
-                status: "error",
-                errorToken: true,
-              });
-              handleClick();
-              break;
-            default:
-              setSnackbar({
-                message: "Ошибка чтения записей! Обновите страницу!",
-                status: "warning",
-                errorToken: false,
-              });
-              handleClick();
-              break;
+          if (err.response.status === 401) {
+            snackbarParams("Ошибка авторизации!!!", "error", true);
+          } else {
+            snackbarParams(
+              "Ошибка чтения записей! Обновите страницу!!!!",
+              "warning",
+              false
+            );
           }
         });
     };
-
     uploadAllRecords();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
 
   const snackbarParams = (message, status, errorToken) => {
@@ -122,17 +113,14 @@ const Main = () => {
                 setCheckDate(false);
               })
               .catch((err) => {
-                switch (err.response.status) {
-                  case 401:
-                    snackbarParams("Ошибка авторизации!!!", "error", true);
-                    break;
-                  default:
-                    snackbarParams(
-                      "Ошибка новой записии! Запись не сохранена!",
-                      "warning",
-                      false
-                    );
-                    break;
+                if (err.response.status === 401) {
+                  snackbarParams("Ошибка авторизации!!!", "error", true);
+                } else {
+                  snackbarParams(
+                    "Ошибка новой записии! Запись не сохранена!",
+                    "warning",
+                    false
+                  );
                 }
               });
           } else {
@@ -273,7 +261,11 @@ const Main = () => {
           Добавить
         </Button>
       </AppBar>
-      <TableRecords allRecords={allRecords} setAllRecords={setAllRecords} />
+      {allRecords.length ? (
+        <TableRecords allRecords={allRecords} setAllRecords={setAllRecords} />
+      ) : (
+        <></>
+      )}
       {errorToken ? (
         <SnackbarComponent
           open={open}
