@@ -1,11 +1,30 @@
-p {
-  color: #000000;
+.group-input {
+  margin-bottom: 20px;
+
+  .input-mui {
+    background-color: white;
+    color: #000000;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+.group-input:last-child {
+  margin-bottom: 20px;
 }
 
 .main {
-  position: relative;
+  justify-self: center;
+  align-items: center;
   width: 100%;
   height: 100%;
+
+  .select-input {
+    width: 300px;
+  }
 
   .label-header,
   .label-add {
@@ -21,14 +40,24 @@ p {
 
   .label-header {
     justify-content: space-between;
+
+    .button-exit {
+      margin-right: 20px;
+    }
   }
 
   .label-add {
     justify-content: space-evenly;
+    align-items: flex-end;
+
+    .button-add {
+      margin-bottom: 20px;
+    }
   }
 
   h1 {
     font-family: Roboto;
+    margin: 20px;
     font-style: normal;
     font-weight: 300;
     font-size: 36px;
@@ -39,5 +68,57 @@ p {
   img {
     width: 88px;
     margin: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    h1 {
+      padding-left: 10px;
+      font-size: 24px;
+    }
+
+    .input-mui,
+    .select-input {
+      width: 250px;
+    }
+
+    .label-add {
+      padding-bottom: 20px;
+      flex-wrap: wrap;
+
+      .button-add {
+        margin-bottom: 0;
+      }
+    }
+
+    img {
+      display: none;
+    }
+  }
+
+  .group-input {
+    margin-bottom: 0;
+
+    p {
+      margin: 5px;
+    }
+  }
+
+  .MuiPaper-root .MuiButton-root {
+    margin-top: 5px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1230px) {
+  .main {
+    .input-mui,
+    .select-input {
+      width: 250px;
+    }
+
+    .label-add {
+      flex-wrap: wrap;
+    }
   }
 }

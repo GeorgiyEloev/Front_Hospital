@@ -14,6 +14,7 @@ const DateInput = ({ newRecord, setNewRecord }) => {
         minDate={new Date("01-01-2021")}
         maxDate={new Date("12-31-2022")}
         name="date"
+        className="input-mui"
         value={date}
         onChange={(event) => {
           setNewRecord({
@@ -26,7 +27,7 @@ const DateInput = ({ newRecord, setNewRecord }) => {
         renderInput={(params) => (
           <TextField
             {...params}
-            sx={{ backgroundColor: "white" }} //fix this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            className="input-mui"
           />
         )}
       />

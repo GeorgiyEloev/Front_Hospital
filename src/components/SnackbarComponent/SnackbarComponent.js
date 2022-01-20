@@ -4,7 +4,14 @@ import MuiAlert from "@mui/material/Alert";
 
 const SnackbarComponent = ({ open, status, message, funClose }) => {
   const Alert = React.forwardRef((props, ref) => {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return (
+      <MuiAlert
+        elevation={6}
+        ref={ref}
+        variant="filled"
+        {...props}
+      />
+    );
   });
   return (
     <Snackbar
@@ -16,7 +23,11 @@ const SnackbarComponent = ({ open, status, message, funClose }) => {
       autoHideDuration={5000}
       onClose={funClose}
     >
-      <Alert onClose={funClose} severity={status} className="alert-style">
+      <Alert
+        onClose={funClose}
+        severity={status}
+        className="alert-style"
+      >
         {message}
       </Alert>
     </Snackbar>
