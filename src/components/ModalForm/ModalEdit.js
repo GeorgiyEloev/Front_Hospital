@@ -40,8 +40,8 @@ const ModalEdit = ({
       if (doctor !== "") {
         if (symptoms !== "") {
           if (
-            ( moment(date).format("YYYY-MM-DD") >= new Date("01-01-2021") &&
-            moment(date).format("YYYY-MM-DD") <= new Date("12-31-2022")) ||
+            ( date >= new Date("01-01-2021") &&
+            date <= new Date("12-31-2022")) ||
             checkDate
           ) {
             if (checkDate) {
