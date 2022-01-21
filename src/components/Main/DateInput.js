@@ -4,7 +4,7 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
-const DateInput = ({ newRecord, setNewRecord }) => {
+const DateInput = ({ newRecord, setNewRecord, setCheckDate }) => {
   const { patient, doctor, date, symptoms } = newRecord;
 
   return (
@@ -17,6 +17,7 @@ const DateInput = ({ newRecord, setNewRecord }) => {
         className="input-mui"
         value={date}
         onChange={(event) => {
+          setCheckDate(false);
           setNewRecord({
             patient,
             doctor,
@@ -25,10 +26,7 @@ const DateInput = ({ newRecord, setNewRecord }) => {
           });
         }}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            className="input-mui"
-          />
+          <TextField {...params} className="input-mui" />
         )}
       />
     </LocalizationProvider>

@@ -117,14 +117,15 @@ const ModalEdit = ({
                 id="outlined-basic"
                 variant="outlined"
                 value={patient}
-                onChange={(event) =>
+                onChange={(event) => {
+                  setCheckDate(false);
                   setRecordEdit({
                     patient: event.target.value,
                     doctor,
                     date,
                     symptoms,
-                  })
-                }
+                  });
+                }}
               />
             </div>
             <div className="group-input">
@@ -134,14 +135,15 @@ const ModalEdit = ({
                 id="demo-simple-select"
                 className="input-mui"
                 value={doctor}
-                onChange={(event) =>
+                onChange={(event) => {
+                  setCheckDate(false);
                   setRecordEdit({
                     patient,
                     doctor: event.target.value,
                     date,
                     symptoms,
-                  })
-                }
+                  });
+                }}
               >
                 {doctors.map((item, index) => {
                   return (
@@ -158,6 +160,7 @@ const ModalEdit = ({
                 className="input-mui"
                 newRecord={recordEdit}
                 setNewRecord={setRecordEdit}
+                setCheckDate={setCheckDate}
               />
             </div>
             <div className="group-input">
@@ -167,14 +170,15 @@ const ModalEdit = ({
                 variant="outlined"
                 className="input-mui"
                 value={symptoms}
-                onChange={(event) =>
+                onChange={(event) => {
+                  setCheckDate(false);
                   setRecordEdit({
                     patient,
                     doctor,
                     date,
                     symptoms: event.target.value,
-                  })
-                }
+                  });
+                }}
               />
             </div>
           </Box>
