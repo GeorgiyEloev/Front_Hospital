@@ -20,17 +20,19 @@ const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
 
   const openModal = () => setOpen(!open);
 
+  const headerNames = ["Имя", "Врач", "Дата", "Жалобы", ""];
+
   return (
     <>
       <TableContainer component={Paper}>
         <Table stickyHeader aria-label="simple table">
           <TableHead>
             <TableRow className="table-row">
-              <TableCell align="center">Имя</TableCell>
-              <TableCell align="center">Врач</TableCell>
-              <TableCell align="center">Дата</TableCell>
-              <TableCell align="center">Жалобы</TableCell>
-              <TableCell align="center"></TableCell>
+              {headerNames.map((headerName, index) => (
+                <TableCell key={index} align="center">
+                  {headerName}
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>

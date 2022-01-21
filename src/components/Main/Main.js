@@ -108,7 +108,7 @@ const Main = () => {
                   snackbarParams("Ошибка авторизации!!!", "error", true);
                 } else {
                   snackbarParams(
-                    "Ошибка новой записии! Запись не сохранена!",
+                    "Ошибка новой записи! Запись не сохранена!",
                     "warning",
                     false
                   );
@@ -129,7 +129,7 @@ const Main = () => {
         snackbarParams("Не выбран врач!", "warning", false);
       }
     } else {
-      snackbarParams("Поле имени паценнта пустое!", "warning", false);
+      snackbarParams("Поле имени пацента пустое!", "warning", false);
     }
   };
 

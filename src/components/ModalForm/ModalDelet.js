@@ -35,7 +35,7 @@ const ModalDelet = ({
           openModal();
         } else {
           snackbarParams(
-            "Ошибка новой записии! Запись не сохранена!",
+            "Ошибка удаления записи! Запись не найдена!",
             "warning",
             false
           );
