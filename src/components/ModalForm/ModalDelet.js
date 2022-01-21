@@ -26,20 +26,20 @@ const ModalDelet = ({
       })
       .then((res) => {
         snackbarParams("УДАЧА! Запись удалена!", "success", false);
-        openModal();
+        openModal(true);
         setAllRecords(res.data.data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
           snackbarParams("Ошибка авторизации!!!", "error", true);
-          openModal();
+          openModal(true);
         } else {
           snackbarParams(
             "Ошибка удаления записи! Запись не найдена!",
             "warning",
             false
           );
-          openModal();
+          openModal(true);
         }
       });
   };
@@ -55,17 +55,11 @@ const ModalDelet = ({
           <AppBar className="header-title">
             <h1>Удалить прием</h1>
           </AppBar>
-          <Box
-            sx={{
-              padding: "20px",
-              bgcolor: "background.paper",
-              boxShadow: 24,
-            }}
-          >
+          <Box className="box-small">
             <p>Вы действительно хотите удалить прием?</p>
           </Box>
           <AppBar className="header-end">
-            <Button variant="outlined" onClick={() => openModal()}>
+            <Button variant="outlined" onClick={() => openModal(true)}>
               Cancel
             </Button>
             <Button variant="outlined" onClick={() => deleteRecord()}>

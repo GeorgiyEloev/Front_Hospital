@@ -257,6 +257,7 @@ const Main = () => {
           allRecords={allRecords}
           setAllRecords={setAllRecords}
           snackbarParams={snackbarParams}
+          doctors={doctors}
         />
       ) : (
         <></>
