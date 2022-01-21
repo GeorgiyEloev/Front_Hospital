@@ -10,7 +10,6 @@ import {
   Paper,
 } from "@mui/material";
 import { DeleteOutlined, Edit } from "@mui/icons-material";
-<<<<<<< HEAD
 import ModalEdit from "../ModalForm/ModalEdit";
 import ModalDelet from "../ModalForm/ModalDelet";
 import "./TableRecords.scss";
@@ -37,17 +36,6 @@ const TableRecords = ({
     setOpen(!open);
     setWhoOpen(who);
   };
-=======
-import ModalDelet from "../ModalForm/ModalDelet";
-import "./TableRecords.scss";
-
-const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
-  const [open, setOpen] = useState(false);
-
-  const [idDelete, setIdDelete] = useState("");
-
-  const openModal = () => setOpen(!open);
->>>>>>> 8ca0525db320afa82e29da89ab5efe82467cf006
 
   const headerNames = ["Имя", "Врач", "Дата", "Жалобы", ""];
 
@@ -88,7 +76,6 @@ const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
                   <DeleteOutlined
                     onClick={() => {
                       setIdDelete(row._id);
-<<<<<<< HEAD
                       openModal(true);
                     }}
                   />
@@ -99,19 +86,12 @@ const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
                       openModal(false);
                     }}
                   />
-=======
-                      openModal();
-                    }}
-                  />
-                  <Edit />
->>>>>>> 8ca0525db320afa82e29da89ab5efe82467cf006
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-<<<<<<< HEAD
       {whoOpen ? (
         <ModalDelet
           open={open}
@@ -132,15 +112,6 @@ const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
           setRecordEdit={setRecordEdit}
         />
       )}
-=======
-      <ModalDelet
-        open={open}
-        openModal={openModal}
-        idDelete={idDelete}
-        setAllRecords={setAllRecords}
-        snackbarParams={snackbarParams}
-      />
->>>>>>> 8ca0525db320afa82e29da89ab5efe82467cf006
     </>
   );
 };
