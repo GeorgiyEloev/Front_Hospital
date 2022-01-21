@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
+import {
+  AppBar,
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
@@ -33,11 +39,10 @@ const Main = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    const tokenEffect = localStorage.getItem("token");
     const uploadAllRecords = async () => {
       await axios
         .get("http://localhost:8000/record/allRecord", {
-          headers: { authorization: tokenEffect },
+          headers: { authorization: token },
         })
         .then((res) => {
           setAllRecords(res.data.data);

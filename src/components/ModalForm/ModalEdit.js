@@ -11,7 +11,6 @@ import {
   Modal,
 } from "@mui/material";
 import DateInput from "../Main/DateInput";
-
 import "./ModalForm.scss";
 
 const ModalEdit = ({
@@ -68,12 +67,16 @@ const ModalEdit = ({
               .catch((err) => {
                 if (err.response.status === 401) {
                   snackbarParams("Ошибка авторизации!!!", "error", true);
+                  setCheckDate(false);
+                  openModal(false);
                 } else {
                   snackbarParams(
                     "Ошибка редактирования записи! Запись не изменина!",
                     "warning",
                     false
                   );
+                  setCheckDate(false);
+                  openModal(false);
                 }
               });
           } else {
@@ -142,11 +145,7 @@ const ModalEdit = ({
               >
                 {doctors.map((item, index) => {
                   return (
-                    <MenuItem
-                      className="input-mui"
-                      key={index}
-                      value={item}
-                    >
+                    <MenuItem className="input-mui" key={index} value={item}>
                       {item}
                     </MenuItem>
                   );
