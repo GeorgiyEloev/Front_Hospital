@@ -26,50 +26,51 @@ const ModalEdit = ({
 }) => {
   const [checkDate, setCheckDate] = useState(false);
 
-  console.log(recordEdit);
   const token = localStorage.getItem("token");
 
   const { patient, doctor, date, symptoms } = recordEdit;
 
   const editRecord = async () => {
-    console.log( recordEdit.date);
     recordEdit.date = moment(date).format("YYYY-MM-DD");
-    console.log( recordEdit.date);
-    console.log(date)
     if (patient !== "") {
       if (doctor !== "") {
         if (symptoms !== "") {
           if (
-            ( date >= new Date("01-01-2021") &&
-            date <= new Date("12-31-2022")) ||
+            (new Date(date) >= new Date("01-01-2021") &&
+              new Date(date) <= new Date("12-31-2022")) ||
             checkDate
           ) {
             if (checkDate) {
               recordEdit.date = moment().format("YYYY-MM-DD");
             }
             await axios
-              .post("http://localhost:8000/record/addNewRecord", recordEdit, {
-                headers: { authorization: token },
-              })
+              .patch(
+                "http://localhost:8000/record/changeRecord",
+                { _id: idEdit, ...recordEdit },
+                {
+                  headers: { authorization: token },
+                }
+              )
               .then((res) => {
                 setAllRecords(res.data.data);
                 if (checkDate) {
                   snackbarParams(
-                    "Запись сохранена! Но дата заменена на текущую!",
+                    "Запись изменина! Но дата заменена на текущую!",
                     "warning",
                     false
                   );
                 } else {
-                  snackbarParams("УДАЧА! Запись сохранена!", "success", false);
+                  snackbarParams("УДАЧА! Запись изменина!", "success", false);
                 }
                 setCheckDate(false);
+                openModal(false);
               })
               .catch((err) => {
                 if (err.response.status === 401) {
                   snackbarParams("Ошибка авторизации!!!", "error", true);
                 } else {
                   snackbarParams(
-                    "Ошибка новой записи! Запись не сохранена!",
+                    "Ошибка редактирования записи! Запись не изменина!",
                     "warning",
                     false
                   );
@@ -128,7 +129,7 @@ const ModalEdit = ({
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                className="input-mui select-input"
+                className="input-mui"
                 value={doctor}
                 onChange={(event) =>
                   setRecordEdit({
@@ -142,7 +143,7 @@ const ModalEdit = ({
                 {doctors.map((item, index) => {
                   return (
                     <MenuItem
-                      className="input-mui select-input"
+                      className="input-mui"
                       key={index}
                       value={item}
                     >
