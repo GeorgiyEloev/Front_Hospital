@@ -10,15 +10,32 @@ import {
   Paper,
 } from "@mui/material";
 import { DeleteOutlined, Edit } from "@mui/icons-material";
+import ModalEdit from "../ModalForm/ModalEdit";
 import ModalDelet from "../ModalForm/ModalDelet";
 import "./TableRecords.scss";
 
-const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
+const TableRecords = ({
+  allRecords,
+  setAllRecords,
+  snackbarParams,
+  doctors,
+}) => {
   const [open, setOpen] = useState(false);
 
   const [idDelete, setIdDelete] = useState("");
+  const [recordEdit, setRecordEdit] = useState({
+    _id: "",
+    patient: "",
+    doctor: "",
+    date: new Date(),
+    symptoms: "",
+  });
+  const [whoOpen, setWhoOpen] = useState();
 
-  const openModal = () => setOpen(!open);
+  const openModal = (who) => {
+    setOpen(!open);
+    setWhoOpen(who);
+  };
 
   const headerNames = ["Имя", "Врач", "Дата", "Жалобы", ""];
 
@@ -59,23 +76,42 @@ const TableRecords = ({ allRecords, setAllRecords, snackbarParams }) => {
                   <DeleteOutlined
                     onClick={() => {
                       setIdDelete(row._id);
-                      openModal();
+                      openModal(true);
                     }}
                   />
-                  <Edit />
+                  <Edit
+                    onClick={() => {
+                      setRecordEdit({ ...row });
+                      setIdDelete(row._id);
+                      openModal(false);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <ModalDelet
-        open={open}
-        openModal={openModal}
-        idDelete={idDelete}
-        setAllRecords={setAllRecords}
-        snackbarParams={snackbarParams}
-      />
+      {whoOpen ? (
+        <ModalDelet
+          open={open}
+          openModal={openModal}
+          idDelete={idDelete}
+          setAllRecords={setAllRecords}
+          snackbarParams={snackbarParams}
+        />
+      ) : (
+        <ModalEdit
+          open={open}
+          openModal={openModal}
+          idEdit={idDelete}
+          recordEdit={recordEdit}
+          setAllRecords={setAllRecords}
+          snackbarParams={snackbarParams}
+          doctors={doctors}
+          setRecordEdit={setRecordEdit}
+        />
+      )}
     </>
   );
 };

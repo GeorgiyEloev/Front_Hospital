@@ -78,8 +78,8 @@ const Main = () => {
       if (doctor !== "") {
         if (symptoms !== "") {
           if (
-            (date >= new Date("01-01-2021") &&
-              date <= new Date("12-31-2022")) ||
+            (new Date(date) >= new Date("01-01-2021") &&
+              new Date(date) <= new Date("12-31-2022")) ||
             checkDate
           ) {
             if (checkDate) {
@@ -185,14 +185,15 @@ const Main = () => {
             id="outlined-basic"
             variant="outlined"
             value={patient}
-            onChange={(event) =>
+            onChange={(event) => {
+              setCheckDate(false);
               setNewRecord({
                 patient: event.target.value,
                 doctor,
                 date,
                 symptoms,
-              })
-            }
+              });
+            }}
           />
         </div>
         <div className="group-input">
@@ -202,14 +203,15 @@ const Main = () => {
             id="demo-simple-select"
             className="input-mui select-input"
             value={doctor}
-            onChange={(event) =>
+            onChange={(event) => {
+              setCheckDate(false);
               setNewRecord({
                 patient,
                 doctor: event.target.value,
                 date,
                 symptoms,
-              })
-            }
+              });
+            }}
           >
             {doctors.map((item, index) => {
               return (
@@ -230,6 +232,7 @@ const Main = () => {
             className="input-mui"
             newRecord={newRecord}
             setNewRecord={setNewRecord}
+            setCheckDate={setCheckDate}
           />
         </div>
         <div className="group-input">
@@ -239,14 +242,15 @@ const Main = () => {
             variant="outlined"
             className="input-mui"
             value={symptoms}
-            onChange={(event) =>
+            onChange={(event) => {
+              setCheckDate(false);
               setNewRecord({
                 patient,
                 doctor,
                 date,
                 symptoms: event.target.value,
-              })
-            }
+              });
+            }}
           />
         </div>
         <Button
@@ -262,6 +266,7 @@ const Main = () => {
           allRecords={allRecords}
           setAllRecords={setAllRecords}
           snackbarParams={snackbarParams}
+          doctors={doctors}
         />
       ) : (
         <></>
