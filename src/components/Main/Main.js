@@ -18,6 +18,12 @@ import "./Main.scss";
 const Main = () => {
   const [allRecords, setAllRecords] = useState([]);
 
+  const [directionCheck, setdirectionCheck] = useState({
+    sortClassName: "sort-hidden",
+    directValue: "asc",
+  });
+  const [sortValue, setValue] = useState("_id");
+
   const [newRecord, setNewRecord] = useState({
     patient: "",
     doctor: "",
@@ -106,6 +112,11 @@ const Main = () => {
                   date: new Date(),
                   symptoms: "",
                 });
+                setValue("_id");
+                setdirectionCheck({
+                  sortClassName: "sort-hidden",
+                  directValue: "asc",
+                });
                 setCheckDate(false);
               })
               .catch((err) => {
@@ -161,8 +172,32 @@ const Main = () => {
     "Волкова Алина Аристарховна",
   ];
 
+  const headerNames = [
+    { key: "_id", text: "" },
+    { key: "patient", text: "Имя" },
+    { key: "doctor", text: "Врач" },
+    { key: "date", text: "Дата" },
+    { key: "symptoms", text: "Жалобы" },
+  ];
+  const direction = [
+    { direction: "asc", text: "По возрастанию" },
+    { direction: "desc", text: "По убыванию" },
+  ];
+
   const { patient, doctor, date, symptoms } = newRecord;
   const { message, status, errorToken } = snackbar;
+  const { sortClassName, directValue } = directionCheck;
+
+  const sortAllRecords = (key, sortDirect) => {
+    setAllRecords(
+      allRecords.sort((record1, record2) =>
+        record1[key] > record2[key] ? 1 : record1[key] < record2[key] ? -1 : 0
+      )
+    );
+    if (sortDirect === "desc" && sortClassName !== "sort-hidden") {
+      setAllRecords(allRecords.reverse());
+    }
+  };
 
   return (
     <div className="main">
@@ -261,6 +296,74 @@ const Main = () => {
           Добавить
         </Button>
       </AppBar>
+      <div className="sort-filter">
+        <div className="sort">
+          <p>Сортировать по:</p>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            className="input-sort"
+            value={sortValue}
+            onChange={(event) => {
+              setValue(event.target.value);
+              if (event.target.value !== "_id") {
+                setdirectionCheck({
+                  sortClassName: "sort",
+                  directValue,
+                });
+                sortAllRecords(event.target.value, directValue);
+              } else {
+                setdirectionCheck({
+                  sortClassName: "sort-hidden",
+                  directValue: "asc",
+                });
+                sortAllRecords(event.target.value, directValue);
+              }
+            }}
+          >
+            {headerNames.map((item, index) => {
+              return (
+                <MenuItem
+                  className="input-sort input-sort-height"
+                  key={index}
+                  value={item.key}
+                >
+                  {item.text}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </div>
+        <div className={sortClassName}>
+          <p>Направление:</p>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            className="input-sort"
+            value={directValue}
+            onChange={(event) => {
+              setdirectionCheck({
+                sortClassName,
+                directValue: event.target.value,
+              });
+              sortAllRecords(sortValue, event.target.value);
+            }}
+          >
+            {direction.map((item, index) => {
+              return (
+                <MenuItem
+                  sx={{ height: "33px" }}
+                  className="input-mui select-input"
+                  key={index}
+                  value={item.direction}
+                >
+                  {item.text}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </div>
+      </div>
       {allRecords.length ? (
         <TableRecords
           allRecords={allRecords}
