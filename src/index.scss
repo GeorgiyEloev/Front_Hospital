@@ -79,6 +79,10 @@ code {
   cursor: pointer;
 }
 
+.MuiMenuItem-root.MuiMenuItem-gutters {
+	height: 33px;
+} 
+
 @media (max-width: 768px) {
   .main .MuiTableContainer-root {
     width: 95%;
