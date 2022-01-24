@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import {
-  AppBar,
-  TextField,
-  Button,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
@@ -352,8 +346,7 @@ const Main = () => {
             {direction.map((item, index) => {
               return (
                 <MenuItem
-                  sx={{ height: "33px" }}
-                  className="input-mui select-input"
+                  className="input-sort input-sort-height"
                   key={index}
                   value={item.direction}
                 >
