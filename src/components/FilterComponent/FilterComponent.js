@@ -30,8 +30,6 @@ const FilterComponent = ({ allRecords, setFilter }) => {
       new Date(maxDate) >= new Date("01-01-2021")
         ? new Date(maxDate)
         : new Date("12-31-2022");
-    console.log(dateFirst);
-    console.log(dateLast);
     setFilter(
       allRecords.filter(
         (record) =>
