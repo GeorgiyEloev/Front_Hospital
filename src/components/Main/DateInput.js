@@ -4,7 +4,7 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 
-const DateInput = ({ value, handlChange, addClass }) => {
+const DateInput = ({ defValue, nameKey, handlChange, addClass }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DesktopDatePicker
@@ -13,8 +13,8 @@ const DateInput = ({ value, handlChange, addClass }) => {
         maxDate={new Date("12-31-2022")}
         name="date"
         className={addClass}
-        value={value ? value : ""}
-        onChange={(event) => handlChange(event)}
+        value={defValue}
+        onChange={(event) => handlChange(nameKey, event)}
         renderInput={(params) => <TextField {...params} className={addClass} />}
       />
     </LocalizationProvider>

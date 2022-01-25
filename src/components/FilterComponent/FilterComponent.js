@@ -17,26 +17,52 @@ const FilterComponent = ({ allRecords, setFilter }) => {
     maxDate: "",
   });
 
+  const [open, setOpen] = useState(false);
+
+  const checkDate = (date) => {
+    return (
+      moment(date).isValid() &&
+      moment(date).format("YYYY-MM-DD") >=
+        moment("01-01-2021").format("YYYY-MM-DD") &&
+      moment(date).format("YYYY-MM-DD") <=
+        moment("12-31-2022").format("YYYY-MM-DD")
+    );
+  };
+
   const filterDate = () => {
-    const dateFirst =
-      moment(minDate).isValid() &&
-      new Date(minDate) >= new Date("01-01-2021") &&
-      new Date(minDate) <= new Date("12-31-2022")
-        ? new Date(minDate)
-        : new Date("01-01-2021");
-    const dateLast =
-      moment(maxDate).isValid() &&
-      new Date(maxDate) <= new Date("12-31-2022") &&
-      new Date(maxDate) >= new Date("01-01-2021")
-        ? new Date(maxDate)
-        : new Date("12-31-2022");
+    const dateFirst = checkDate(minDate)
+      ? moment(minDate).format("YYYY-MM-DD")
+      : moment("01-01-2021").format("YYYY-MM-DD");
+    const dateLast = checkDate(maxDate)
+      ? moment(maxDate).format("YYYY-MM-DD")
+      : moment("12-31-2022").format("YYYY-MM-DD");
     setFilter(
       allRecords.filter(
         (record) =>
-          new Date(record.date) >= dateFirst &&
-          new Date(record.date) <= dateLast
+          moment(record.date).format("YYYY-MM-DD") >= dateFirst &&
+          moment(record.date).format("YYYY-MM-DD") <= dateLast
       )
     );
+  };
+
+  const removeFilter = () => {
+    setDateFilter({
+      minDate: "",
+      maxDate: "",
+    });
+    setFilter([]);
+    setHidden({
+      closeFilter: "filter",
+      openFilter: "filter-hidden",
+    });
+    setOpen(false);
+  };
+
+  const handleChange = (nameKey , event) => {
+    setDateFilter({
+			...dateFilter,
+      [nameKey] : event,
+    });
   };
 
   const { closeFilter, openFilter } = hiddenFilter;
@@ -48,6 +74,7 @@ const FilterComponent = ({ allRecords, setFilter }) => {
         <p>Добавить фильтр по дате:</p>
         <AddBoxIcon
           onClick={() => {
+            setOpen(true);
             setDateFilter({
               minDate: "",
               maxDate: "",
@@ -59,50 +86,41 @@ const FilterComponent = ({ allRecords, setFilter }) => {
           }}
         />
       </div>
-      <div className={openFilter}>
-        <div className="filter">
-          <p>С:</p>
-          <DateInput
-            addClass="filter-date"
-            value={minDate}
-            handlChange={(event) => {
-              setDateFilter({
-                maxDate,
-                minDate: event,
-              });
-            }}
+      {open && (
+        <div className={openFilter}>
+          <div className="filter">
+            <p>С:</p>
+            <DateInput
+              addClass="filter-date"
+              defValue={minDate}
+							nameKey="minDate"
+              handlChange={handleChange}
+            />
+          </div>
+          <div className="filter">
+            <p>По:</p>
+            <DateInput
+              addClass="filter-date"
+              defValue={maxDate}
+							nameKey="maxDate"
+              handlChange={handleChange}
+            />
+          </div>
+          <div className="filter">
+            <Button
+              variant="outlined"
+              className="button-filter"
+              onClick={() => filterDate()}
+            >
+              Фильтровать
+            </Button>
+          </div>
+          <DeleteOutlineIcon
+            className="icon-delete-filter"
+            onClick={() => removeFilter()}
           />
         </div>
-        <div className="filter">
-          <p>По:</p>
-          <DateInput
-            addClass="filter-date"
-            value={maxDate}
-            handlChange={(event) => {
-              setDateFilter({
-                maxDate: event,
-                minDate,
-              });
-            }}
-          />
-        </div>
-        <div className="filter">
-          <Button
-            variant="outlined"
-            className="button-filter"
-            onClick={() => filterDate()}
-          >
-            Фильтровать
-          </Button>
-        </div>
-        <DeleteOutlineIcon
-          className="icon-delete-filter"
-          onClick={() => {
-            setFilter([]);
-            setHidden({ closeFilter: "filter", openFilter: "filter-hidden" });
-          }}
-        />
-      </div>
+      )}
     </>
   );
 };

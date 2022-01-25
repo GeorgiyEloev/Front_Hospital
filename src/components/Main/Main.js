@@ -2,13 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import {
-  AppBar,
-  TextField,
-  Button,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
 import FilterComponent from "../FilterComponent/FilterComponent";
@@ -46,6 +40,14 @@ const Main = () => {
   const navigation = useNavigate();
 
   const token = localStorage.getItem("token");
+
+  const handleChange = (nameKey, event) => {
+    setCheckDate(false);
+    setNewRecord({
+      ...newRecord,
+      [nameKey]: event,
+    });
+  };
 
   const uploadAllRecords = async () => {
     await axios
@@ -194,13 +196,14 @@ const Main = () => {
   const { sortClassName, directValue } = directionCheck;
 
   const sortAllRecords = (key, sortDirect) => {
-    setAllRecords(
-      allRecords.sort((record1, record2) =>
-        record1[key] > record2[key] ? 1 : record1[key] < record2[key] ? -1 : 0
+    setFilter(
+      (filterRecords.length ? filterRecords : allRecords).sort(
+        (record1, record2) =>
+          record1[key] > record2[key] ? 1 : record1[key] < record2[key] ? -1 : 0
       )
     );
     if (sortDirect === "desc" && sortClassName !== "sort-hidden") {
-      setAllRecords(allRecords.reverse());
+      setFilter((filterRecords.length ? filterRecords : allRecords).reverse());
     }
   };
 
@@ -225,15 +228,7 @@ const Main = () => {
             id="outlined-basic"
             variant="outlined"
             value={patient}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient: event.target.value,
-                doctor,
-                date,
-                symptoms,
-              });
-            }}
+            onChange={(event) => handleChange("patient", event.target.value)}
           />
         </div>
         <div className="group-input">
@@ -243,15 +238,7 @@ const Main = () => {
             id="demo-simple-select"
             className="input-mui select-input"
             value={doctor}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient,
-                doctor: event.target.value,
-                date,
-                symptoms,
-              });
-            }}
+            onChange={(event) => handleChange("doctor", event.target.value)}
           >
             {doctors.map((item, index) => {
               return (
@@ -270,16 +257,9 @@ const Main = () => {
           <p>Дата:</p>
           <DateInput
             addClass="input-mui"
-            value={date}
-            handlChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient,
-                doctor,
-                date: event,
-                symptoms,
-              });
-            }}
+            defValue={date}
+            nameKey="date"
+            handlChange={handleChange}
           />
         </div>
         <div className="group-input">
@@ -289,15 +269,7 @@ const Main = () => {
             variant="outlined"
             className="input-mui"
             value={symptoms}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient,
-                doctor,
-                date,
-                symptoms: event.target.value,
-              });
-            }}
+            onChange={(event) => handleChange("symptoms", event.target.value)}
           />
         </div>
         <Button
@@ -330,6 +302,7 @@ const Main = () => {
                   directValue: "asc",
                 });
                 sortAllRecords(event.target.value, directValue);
+                setFilter([]);
               }
             }}
           >

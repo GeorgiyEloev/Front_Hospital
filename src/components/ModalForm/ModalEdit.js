@@ -16,7 +16,6 @@ import "./ModalForm.scss";
 const ModalEdit = ({
   open,
   openModal,
-  idEdit,
   recordEdit,
   setAllRecords,
   snackbarParams,
@@ -25,7 +24,19 @@ const ModalEdit = ({
 }) => {
   const [checkDate, setCheckDate] = useState(false);
 
+  console.log(recordEdit);
+
   const token = localStorage.getItem("token");
+
+  const handleChange = (nameKey, event) => {
+    setCheckDate(false);
+    setRecordEdit({
+      ...recordEdit,
+      [nameKey]: event,
+    });
+  };
+
+
 
   const { patient, doctor, date, symptoms } = recordEdit;
 
@@ -45,7 +56,7 @@ const ModalEdit = ({
             await axios
               .patch(
                 "http://localhost:8000/record/changeRecord",
-                { _id: idEdit, ...recordEdit },
+                { ...recordEdit },
                 {
                   headers: { authorization: token },
                 }
@@ -117,15 +128,9 @@ const ModalEdit = ({
                 id="outlined-basic"
                 variant="outlined"
                 value={patient}
-                onChange={(event) => {
-                  setCheckDate(false);
-                  setRecordEdit({
-                    patient: event.target.value,
-                    doctor,
-                    date,
-                    symptoms,
-                  });
-                }}
+                onChange={(event) =>
+                  handleChange("patient", event.target.value)
+                }
               />
             </div>
             <div className="group-input">
@@ -135,15 +140,7 @@ const ModalEdit = ({
                 id="demo-simple-select"
                 className="input-mui"
                 value={doctor}
-                onChange={(event) => {
-                  setCheckDate(false);
-                  setRecordEdit({
-                    patient,
-                    doctor: event.target.value,
-                    date,
-                    symptoms,
-                  });
-                }}
+                onChange={(event) => handleChange("doctor", event.target.value)}
               >
                 {doctors.map((item, index) => {
                   return (
@@ -158,16 +155,9 @@ const ModalEdit = ({
               <p>Дата:</p>
               <DateInput
                 addClass="input-mui"
-                value={date}
-                handlChange={(event) => {
-                  setCheckDate(false);
-                  setRecordEdit({
-                    patient,
-                    doctor,
-                    date: event,
-                    symptoms,
-                  });
-                }}
+                defValue={date}
+                nameKey="date"
+                handlChange={handleChange}
               />
             </div>
             <div className="group-input">
@@ -177,15 +167,9 @@ const ModalEdit = ({
                 variant="outlined"
                 className="input-mui"
                 value={symptoms}
-                onChange={(event) => {
-                  setCheckDate(false);
-                  setRecordEdit({
-                    patient,
-                    doctor,
-                    date,
-                    symptoms: event.target.value,
-                  });
-                }}
+                onChange={(event) =>
+                  handleChange("symptoms", event.target.value)
+                }
               />
             </div>
           </Box>

@@ -55,12 +55,7 @@ const TableRecords = ({
           <TableBody>
             {allRecords.map((row) => (
               <TableRow className="row" key={row._id}>
-                <TableCell
-                  className="cell-patient"
-                  align="center"
-                  component="th"
-                  scope="row"
-                >
+                <TableCell className="cell-patient" align="center">
                   {row.patient}
                 </TableCell>
                 <TableCell className="cell-doctor" align="center">
