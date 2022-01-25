@@ -4,11 +4,12 @@ import { Button } from "@mui/material";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DateInput from "../Main/DateInput";
+import "./FilterComponent.scss";
 
 const FilterComponent = ({ allRecords, setFilter }) => {
   const [hiddenFilter, setHidden] = useState({
-    closeFilter: "sort",
-    openFilter: "sort-hidden",
+    closeFilter: "filter",
+    openFilter: "filter-hidden",
   });
 
   const [dateFilter, setDateFilter] = useState({
@@ -17,13 +18,25 @@ const FilterComponent = ({ allRecords, setFilter }) => {
   });
 
   const filterDate = () => {
-    const dateFirst = moment(minDate).format();
-    console.log(dateFirst.inValid());
+    const dateFirst =
+      moment(minDate).isValid() &&
+      new Date(minDate) >= new Date("01-01-2021") &&
+      new Date(minDate) <= new Date("12-31-2022")
+        ? new Date(minDate)
+        : new Date("01-01-2021");
+    const dateLast =
+      moment(maxDate).isValid() &&
+      new Date(maxDate) <= new Date("12-31-2022") &&
+      new Date(maxDate) >= new Date("01-01-2021")
+        ? new Date(maxDate)
+        : new Date("12-31-2022");
+    console.log(dateFirst);
+    console.log(dateLast);
     setFilter(
       allRecords.filter(
         (record) =>
-          new Date(record.date) >= new Date(minDate) &&
-          new Date(record.date) <= new Date(maxDate)
+          new Date(record.date) >= dateFirst &&
+          new Date(record.date) <= dateLast
       )
     );
   };
@@ -41,14 +54,18 @@ const FilterComponent = ({ allRecords, setFilter }) => {
               minDate: "",
               maxDate: "",
             });
-            setHidden({ closeFilter: "sort-hidden", openFilter: "sort" });
+            setHidden({
+              closeFilter: "filter-hidden",
+              openFilter: "filter-open",
+            });
           }}
         />
       </div>
       <div className={openFilter}>
-        <div className="sort">
+        <div className="filter">
           <p>С:</p>
           <DateInput
+            addClass="filter-date"
             value={minDate}
             handlChange={(event) => {
               setDateFilter({
@@ -58,9 +75,10 @@ const FilterComponent = ({ allRecords, setFilter }) => {
             }}
           />
         </div>
-        <div className="sort">
+        <div className="filter">
           <p>По:</p>
           <DateInput
+            addClass="filter-date"
             value={maxDate}
             handlChange={(event) => {
               setDateFilter({
@@ -70,19 +88,20 @@ const FilterComponent = ({ allRecords, setFilter }) => {
             }}
           />
         </div>
-        <div className="sort">
+        <div className="filter">
           <Button
             variant="outlined"
-            className="button-add"
+            className="button-filter"
             onClick={() => filterDate()}
           >
             Фильтровать
           </Button>
         </div>
         <DeleteOutlineIcon
+          className="icon-delete-filter"
           onClick={() => {
             setFilter([]);
-            setHidden({ closeFilter: "sort", openFilter: "sort-hidden" });
+            setHidden({ closeFilter: "filter", openFilter: "filter-hidden" });
           }}
         />
       </div>

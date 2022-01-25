@@ -157,6 +157,7 @@ const ModalEdit = ({
             <div className="group-input">
               <p>Дата:</p>
               <DateInput
+                addClass="input-mui"
                 value={date}
                 handlChange={(event) => {
                   setCheckDate(false);
