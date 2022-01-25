@@ -97,18 +97,18 @@
 }
 
 .sort-hidden {
-	display: none;
+  display: none;
 }
 
 @media (max-width: 768px) {
-	.sort-filter{
-		flex-direction: column;
+  .sort-filter {
+    flex-direction: column;
     align-items: end;
-	}
+  }
 
-	.sort:first-child {
-		margin-bottom: 20px;
-	}
+  .sort:first-child {
+    margin-bottom: 20px;
+  }
 
   .main {
     h1 {
@@ -162,9 +162,7 @@
 }
 
 @media (max-width: 425px) {
-
-	.sort {
-		flex-direction: column;
-	}
-	
+  .sort {
+    flex-direction: column;
+  }
 }
