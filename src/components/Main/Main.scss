@@ -71,7 +71,45 @@
   }
 }
 
+.sort-filter {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.sort {
+  display: flex;
+  gap: 5px;
+  margin-right: 20px;
+
+  .input-sort {
+    width: 200px;
+    background-color: white;
+    color: #000000;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+
+.sort-hidden {
+  display: none;
+}
+
 @media (max-width: 768px) {
+  .sort-filter {
+    flex-direction: column;
+    align-items: end;
+  }
+
+  .sort:first-child {
+    margin-bottom: 20px;
+  }
+
   .main {
     h1 {
       padding-left: 10px;
@@ -120,5 +158,11 @@
     .label-add {
       flex-wrap: wrap;
     }
+  }
+}
+
+@media (max-width: 425px) {
+  .sort {
+    flex-direction: column;
   }
 }
