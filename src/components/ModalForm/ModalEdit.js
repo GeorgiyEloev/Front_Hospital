@@ -157,10 +157,16 @@ const ModalEdit = ({
             <div className="group-input">
               <p>Дата:</p>
               <DateInput
-                className="input-mui"
-                newRecord={recordEdit}
-                setNewRecord={setRecordEdit}
-                setCheckDate={setCheckDate}
+                value={date}
+                handlChange={(event) => {
+                  setCheckDate(false);
+                  setRecordEdit({
+                    patient,
+                    doctor,
+                    date: event,
+                    symptoms,
+                  });
+                }}
               />
             </div>
             <div className="group-input">

@@ -5,11 +5,13 @@ import moment from "moment";
 import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
+import FilterComponent from "../FilterComponent/FilterComponent";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import logo from "../../img/logo.png";
 import "./Main.scss";
 
 const Main = () => {
+  const [filterRecords, setFilter] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
 
   const [directionCheck, setdirectionCheck] = useState({
@@ -260,9 +262,16 @@ const Main = () => {
           <p>Дата:</p>
           <DateInput
             className="input-mui"
-            newRecord={newRecord}
-            setNewRecord={setNewRecord}
-            setCheckDate={setCheckDate}
+            value={date}
+            handlChange={(event) => {
+              setCheckDate(false);
+              setNewRecord({
+                patient,
+                doctor,
+                date: event,
+                symptoms,
+              });
+            }}
           />
         </div>
         <div className="group-input">
@@ -357,10 +366,11 @@ const Main = () => {
             })}
           </Select>
         </div>
+        <FilterComponent allRecords={allRecords} setFilter={setFilter} />
       </div>
       {allRecords.length ? (
         <TableRecords
-          allRecords={allRecords}
+          allRecords={filterRecords.length ? filterRecords : allRecords}
           setAllRecords={setAllRecords}
           snackbarParams={snackbarParams}
           doctors={doctors}
