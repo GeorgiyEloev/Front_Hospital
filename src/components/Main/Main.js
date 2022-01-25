@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import { AppBar, TextField, Button, MenuItem, Select } from "@mui/material";
+import {
+  AppBar,
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
 import FilterComponent from "../FilterComponent/FilterComponent";
@@ -18,6 +24,7 @@ const Main = () => {
     sortClassName: "sort-hidden",
     directValue: "asc",
   });
+
   const [sortValue, setValue] = useState("_id");
 
   const [newRecord, setNewRecord] = useState({
@@ -176,6 +183,7 @@ const Main = () => {
     { key: "date", text: "Дата" },
     { key: "symptoms", text: "Жалобы" },
   ];
+
   const direction = [
     { direction: "asc", text: "По возрастанию" },
     { direction: "desc", text: "По убыванию" },
