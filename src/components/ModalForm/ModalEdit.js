@@ -24,8 +24,6 @@ const ModalEdit = ({
 }) => {
   const [checkDate, setCheckDate] = useState(false);
 
-  console.log(recordEdit);
-
   const token = localStorage.getItem("token");
 
   const handleChange = (nameKey, event) => {
@@ -35,8 +33,6 @@ const ModalEdit = ({
       [nameKey]: event,
     });
   };
-
-
 
   const { patient, doctor, date, symptoms } = recordEdit;
 
