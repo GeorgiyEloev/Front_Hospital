@@ -64,7 +64,7 @@ const Login = () => {
       })
       .then((results) => {
         localStorage.setItem("token", results.data.data.token);
-				navigation("/main");
+        navigation("/main");
       })
       .catch((err) => {
         setSnackbar({

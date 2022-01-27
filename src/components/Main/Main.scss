@@ -73,16 +73,20 @@
 
 .sort-filter {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: end;
+  flex-wrap: wrap;
 }
 
 .sort {
   display: flex;
+  align-items: center;
   gap: 5px;
   margin-right: 20px;
+  margin-bottom: 5px;
+  margin-top: 5px;
 
   .input-sort {
     width: 200px;
@@ -106,8 +110,8 @@
     align-items: end;
   }
 
-  .sort:first-child {
-    margin-bottom: 20px;
+  .sort {
+    margin-top: 0;
   }
 
   .main {
@@ -164,5 +168,10 @@
 @media (max-width: 425px) {
   .sort {
     flex-direction: column;
+    align-items: end;
+
+    p {
+      margin-top: 0;
+    }
   }
 }

@@ -11,11 +11,13 @@ import {
 } from "@mui/material";
 import DateInput from "./DateInput";
 import TableRecords from "../TableRecords/TableRecords";
+import FilterComponent from "../FilterComponent/FilterComponent";
 import SnackbarComponent from "../SnackbarComponent/SnackbarComponent";
 import logo from "../../img/logo.png";
 import "./Main.scss";
 
 const Main = () => {
+  const [filterRecords, setFilter] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
 
   const [directionCheck, setdirectionCheck] = useState({
@@ -45,27 +47,36 @@ const Main = () => {
 
   const token = localStorage.getItem("token");
 
+  const handleChange = (nameKey, event) => {
+    setCheckDate(false);
+    setNewRecord({
+      ...newRecord,
+      [nameKey]: event,
+    });
+  };
+
+  const uploadAllRecords = async () => {
+    await axios
+      .get("http://localhost:8000/record/allRecord", {
+        headers: { authorization: token },
+      })
+      .then((res) => {
+        setAllRecords(res.data.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          snackbarParams("Ошибка авторизации!!!", "error", true);
+        } else {
+          snackbarParams(
+            "Ошибка чтения записей! Обновите страницу!!!!",
+            "warning",
+            false
+          );
+        }
+      });
+  };
+
   useEffect(() => {
-    const uploadAllRecords = async () => {
-      await axios
-        .get("http://localhost:8000/record/allRecord", {
-          headers: { authorization: token },
-        })
-        .then((res) => {
-          setAllRecords(res.data.data);
-        })
-        .catch((err) => {
-          if (err.response.status === 401) {
-            snackbarParams("Ошибка авторизации!!!", "error", true);
-          } else {
-            snackbarParams(
-              "Ошибка чтения записей! Обновите страницу!!!!",
-              "warning",
-              false
-            );
-          }
-        });
-    };
     uploadAllRecords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigation]);
@@ -180,7 +191,7 @@ const Main = () => {
     { key: "date", text: "Дата" },
     { key: "symptoms", text: "Жалобы" },
   ];
-	
+
   const direction = [
     { direction: "asc", text: "По возрастанию" },
     { direction: "desc", text: "По убыванию" },
@@ -191,13 +202,14 @@ const Main = () => {
   const { sortClassName, directValue } = directionCheck;
 
   const sortAllRecords = (key, sortDirect) => {
-    setAllRecords(
-      allRecords.sort((record1, record2) =>
-        record1[key] > record2[key] ? 1 : record1[key] < record2[key] ? -1 : 0
+    setFilter(
+      (filterRecords.length ? filterRecords : allRecords).sort(
+        (record1, record2) =>
+          record1[key] > record2[key] ? 1 : record1[key] < record2[key] ? -1 : 0
       )
     );
     if (sortDirect === "desc" && sortClassName !== "sort-hidden") {
-      setAllRecords(allRecords.reverse());
+      setFilter((filterRecords.length ? filterRecords : allRecords).reverse());
     }
   };
 
@@ -222,15 +234,7 @@ const Main = () => {
             id="outlined-basic"
             variant="outlined"
             value={patient}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient: event.target.value,
-                doctor,
-                date,
-                symptoms,
-              });
-            }}
+            onChange={(event) => handleChange("patient", event.target.value)}
           />
         </div>
         <div className="group-input">
@@ -240,15 +244,7 @@ const Main = () => {
             id="demo-simple-select"
             className="input-mui select-input"
             value={doctor}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient,
-                doctor: event.target.value,
-                date,
-                symptoms,
-              });
-            }}
+            onChange={(event) => handleChange("doctor", event.target.value)}
           >
             {doctors.map((item, index) => {
               return (
@@ -266,10 +262,10 @@ const Main = () => {
         <div className="group-input">
           <p>Дата:</p>
           <DateInput
-            className="input-mui"
-            newRecord={newRecord}
-            setNewRecord={setNewRecord}
-            setCheckDate={setCheckDate}
+            addClass="input-mui"
+            defValue={date}
+            nameKey="date"
+            handlChange={handleChange}
           />
         </div>
         <div className="group-input">
@@ -279,15 +275,7 @@ const Main = () => {
             variant="outlined"
             className="input-mui"
             value={symptoms}
-            onChange={(event) => {
-              setCheckDate(false);
-              setNewRecord({
-                patient,
-                doctor,
-                date,
-                symptoms: event.target.value,
-              });
-            }}
+            onChange={(event) => handleChange("symptoms", event.target.value)}
           />
         </div>
         <Button
@@ -320,6 +308,7 @@ const Main = () => {
                   directValue: "asc",
                 });
                 sortAllRecords(event.target.value, directValue);
+                setFilter([]);
               }
             }}
           >
@@ -364,10 +353,11 @@ const Main = () => {
             })}
           </Select>
         </div>
+        <FilterComponent allRecords={allRecords} setFilter={setFilter} />
       </div>
       {allRecords.length ? (
         <TableRecords
-          allRecords={allRecords}
+          allRecords={filterRecords.length ? filterRecords : allRecords}
           setAllRecords={setAllRecords}
           snackbarParams={snackbarParams}
           doctors={doctors}
