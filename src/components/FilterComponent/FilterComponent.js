@@ -60,7 +60,7 @@ const FilterComponent = ({ allRecords, setFilter }) => {
 
   const handleChange = (nameKey , event) => {
     setDateFilter({
-			...dateFilter,
+      ...dateFilter,
       [nameKey] : event,
     });
   };
@@ -93,7 +93,7 @@ const FilterComponent = ({ allRecords, setFilter }) => {
             <DateInput
               addClass="filter-date"
               defValue={minDate}
-							nameKey="minDate"
+              nameKey="minDate"
               handlChange={handleChange}
             />
           </div>
@@ -102,7 +102,7 @@ const FilterComponent = ({ allRecords, setFilter }) => {
             <DateInput
               addClass="filter-date"
               defValue={maxDate}
-							nameKey="maxDate"
+              nameKey="maxDate"
               handlChange={handleChange}
             />
           </div>
